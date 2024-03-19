@@ -1,0 +1,60 @@
+public interface TrafficLight {
+
+    void lightUp();
+
+    void setState(LightState lightState);
+
+}
+public class TrafficLightImpl implements TrafficLight {
+
+    private LightState currentState;
+
+    public TrafficLightImpl(LightState startState) {
+        this.currentState = startState;
+    }
+
+    @Override
+    public void lightUp() {
+        currentState.lightUp();
+        currentState.goToNextState(this);
+    }
+
+    @Override
+    public void setState(LightState lightState) {
+        currentState = lightState;
+    }
+}
+public enum LightState {
+
+    GREEN("Зелёный") {
+        @Override
+        public void goToNextState(TrafficLight trafficLight) {
+            trafficLight.setState(PRE_YELLOW);
+        }
+    },
+    PRE_YELLOW("Жёлтый") {
+        @Override
+        public void goToNextState(TrafficLight trafficLight) {
+            trafficLight.setState(RED);;
+        }
+    },
+    RED("Красный") {
+        @Override
+        public void goToNextState(TrafficLight trafficLight) {
+            trafficLight.setState(POST_YELLOW);;
+        }
+    },
+    POST_YELLOW("Жёлтый") {
+        @Override
+        public void goToNextState(TrafficLight trafficLight) {
+            trafficLight.setState(GREEN);;
+        }
+    },
+    INFINITY_YELLOW("Мигающий жёлтый") {
+        @Override
+        public void goToNextState(TrafficLight trafficLight) {
+            // no logic
+        }
+    };
+
+    private final String color;
