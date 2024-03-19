@@ -1,0 +1,67 @@
+#include <iostream>
+ 
+using namespace std;
+ 
+ 
+class Matrix
+{
+public:
+    int **mat;
+    int *rows;  //число строк
+    int *colls; //число столбцов
+    size_t SIZE;
+ 
+    Matrix();//конструктор без параметров
+    Matrix(size_t size = 0) : SIZE(size);//конструктор с одним параметром
+    Matrix(size_t size = 0, int inAr) : SIZE(size);//конструктор с двумя параметрами
+    ~Matrix();//деструктор
+ 
+    void printMatrix();
+    void sumElMatrix();
+    void diffElMatrix();
+    void multElMatrix();
+    void multMatrOnNumb();
+};
+ 
+Matrix::Matrix()
+{
+    this->mat = NULL;
+    this->rows = 0;
+    this->colls = 0;
+}
+ 
+Matrix::Matrix(size_t size = 0):SIZE(size)
+{
+    mat = new int* [SIZE];
+    for(int i = 0; i < SIZE; i++)
+    {
+        mat[i] = new int[SIZE];
+    }
+}
+ 
+Matrix::Matrix(size_t size = 0, int inAr) : SIZE (size)
+{
+    mat = new int* [SIZE];
+    for (int i = 0; i < SIZE; i++)
+    {
+        mat[i] = new int[inAr];
+    }
+}
+ 
+ 
+Matrix::~Matrix()
+{
+    for(int i = 0; i < SIZE; ++i)
+    {
+        delete  [] mat[i];
+        mat[i] = NULL;
+    }
+    delete [] mat;
+    mat = NULL;
+}
+ 
+int main()
+{
+ 
+    return 0;
+}
